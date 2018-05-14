@@ -3,20 +3,16 @@
  * @param {string} B
  * @return {boolean}
  */
-var rotateString = function(A, B) {
-    if (A === B) return true;
-    if (A.length !== B.length) return false
-    
-    const haystack = B.split('');
-    const needle = A.split('');
-    
-    let thread = needle[0];
+const rotateString = function(needle, haystack, startAt=0) {
+    if (needle === haystack) return true;
+    if (needle.length !== haystack.length) return false
+   
     let seeking = -1;
     
     const iterationIndexes = [];
     let iteration = -1;
     
-    for (let i = 0; i < haystack.length; i++) {
+    for (let i = startAt; i < haystack.length; i++) {
         // If we're seeing and seeing a direct match, continue
         if (seeking !== -1) {
             if (needle[seeking] === haystack[i]) {
