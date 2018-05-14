@@ -1,12 +1,33 @@
 /**
+ 52ms runtime - an overoptimized version that attempts to optimize at which point it begins seeking.
  * @param {string} A
  * @param {string} B
  * @return {boolean}
  */
-const rotateString = function(needle, haystack, startAt=0) {
-    if (needle === haystack) return true;
-    if (needle.length !== haystack.length) return false
-   
+
+const rotateString = function(A, B) {
+    if (A === B) return true;
+    if (A.length !== B.length) return false;
+    
+    let baseChars = Math.floor(Math.log(A.length));
+    while(baseChars > 0) {
+        const index = B.indexOf(A.substring(0, baseChars));
+        
+        if (~index) {
+            return rotateStringAt(A, B, index);
+        }
+        
+        baseChars--;
+    }
+    
+    return rotateStringAt(A, B);
+}
+
+const rotateStringAt = function(A, B, startAt = 0) {
+    
+    const haystack = B.split('');
+    const needle = A.split('');
+    
     let seeking = -1;
     
     const iterationIndexes = [];
